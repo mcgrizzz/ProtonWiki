@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Getting Started](README.md)
-* [Introduction](introduction.md)
+* [Introduction](README.md)
+* [Getting Started](getting-started.md)
 * [Simple Network Chat Walkthrough](simple-network-chat-walkthrough.md)
 

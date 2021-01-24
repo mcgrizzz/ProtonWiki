@@ -154,7 +154,7 @@ identification:
 
 `bStatsEnabled` is a boolean value that enabled basic metric collection. You can disable this if you like.
 
-### Setting-up your plugin's `plugin.yml`
+### Setting-up your plugin
 
 Just make sure that in your `plugin.yml`, you include the dependency for Proton.
 

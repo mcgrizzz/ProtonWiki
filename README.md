@@ -7,7 +7,7 @@ Proton is a library which aims to give you a reliable and flexible solution to c
 1. creates a simple system for messaging between servers and
 2. is robust and versatile enough to where you can implement any messaging need you require.
 
-Proton is still being actively developed and tested. Your feedback is welcome.
+   Proton is still being actively developed and tested. Your feedback is welcome.
 
 ### What is RabbitMQ?
 

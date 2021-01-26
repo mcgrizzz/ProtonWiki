@@ -94,6 +94,7 @@ identification:
   clientName: "client1"
   groups: []
 bStatsEnabled: true
+checkForUpdates: true
 ```
 
 There are a lot of options here, but let's look at them in smaller pieces.
@@ -152,7 +153,9 @@ identification:
   groups: []
 ```
 
-`bStatsEnabled` is a boolean value that enabled basic metric collection. You can disable this if you like.
+`bStatsEnabled` is a boolean value that enables basic metric collection.
+
+`checkForUpdates` is a boolean value that enables update checks which will run only once, on server startup.
 
 ### Setting-up your plugin
 

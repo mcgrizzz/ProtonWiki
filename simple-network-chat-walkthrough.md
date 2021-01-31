@@ -6,7 +6,7 @@ Before you do anything with Proton, you need a reference to ProtonManager. In yo
 
 ```java
 public void onEnable(){
-    manager = Proton.getProtonManager();
+    this.protonManager = ProtonProvider.get();
 }
 ```
 
@@ -22,7 +22,7 @@ Create an event listener for the async chat event and broadcast your custom data
 @EventHandler
 public void onPlayerChat(AsyncPlayerChatEvent event){
     PlayerMessage message = new PlayerMessage(event.getPlayer().getName(), event.getMessage());
-    manager.broadcast("networkchat", "chatMessage", message);
+    protonManager.broadcast("networkchat", "chatMessage", message);
 }
 ```
 
@@ -49,10 +49,8 @@ We must also register our **MessageHandler**s with **Proton.** This is done thro
 
 ```java
 public void onEnable(){
-    manager = Proton.getProtonManager();
-    if(manager != null){
-        manager.registerMessageHandlers(this, this);
-    }
+    this.protonManager = ProtonProvider.get();
+    this.protonManager.registerMessageHandlers(this);
 }
 ```
 

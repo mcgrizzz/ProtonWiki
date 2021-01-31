@@ -23,7 +23,7 @@ description: >-
 <dependency>
     <groupId>com.github.mcgrizzz</groupId>
     <artifactId>Proton</artifactId>
-    <version>v1.1.0</version>
+    <version>v1.3.0</version>
     <scope>provided</scope>
 </dependency>
 ```
@@ -39,7 +39,7 @@ repositories {
 
 ```groovy
 dependencies {
-        implementation 'com.github.mcgrizzz:Proton:v1.1.1'
+        implementation 'com.github.mcgrizzz:Proton:v1.3.0'
 }
 ```
 
@@ -68,7 +68,13 @@ Here are some hosts for RabbitMQ that you may find helpful. One of them actually
 
 \*When choosing a host and plan consider your network's size and needs.
 
-### Setting-up the `config.yml` for Proton
+### Setting-up Redis
+
+{% hint style="danger" %}
+This section is under-construction. Please take a look at [Redis Quickstart](https://redis.io/topics/quickstart)
+{% endhint %}
+
+### Proton's `config.yml` 
 
 Before integrating with Proton, you should configure your servers' Proton configs.
 
@@ -93,7 +99,6 @@ redis:
 identification:
   clientName: "client1"
   groups: []
-bStatsEnabled: true
 checkForUpdates: true
 ```
 
@@ -153,12 +158,16 @@ identification:
   groups: []
 ```
 
-`bStatsEnabled` is a boolean value that enables basic metric collection.
-
 `checkForUpdates` is a boolean value that enables update checks which will run only once, on server startup.
 
-### Setting-up your plugin
+### Your plugin
 
+{% hint style="success" %}
+Proton can run either on Bukkit or Bungeecord
+{% endhint %}
+
+{% tabs %}
+{% tab title="Bukkit" %}
 Just make sure that in your `plugin.yml`, you include the dependency for Proton.
 
 ```yaml
@@ -168,6 +177,20 @@ version: 1.0
 depend:
   - Proton
 ```
+{% endtab %}
+
+{% tab title="Bungeecord" %}
+Just make sure that in your `bungee.yml`, you include the dependency for Proton.
+
+```yaml
+main: org.test.Test
+name: TestPlugin
+author: Me
+version: 1.0
+depends: ["Proton"]
+```
+{% endtab %}
+{% endtabs %}
 
 ## Proton Usage
 
@@ -180,11 +203,13 @@ private ProtonManager protonManager;
 
 @Override
 public void onEnable() {
-    this.protonManager = Proton.getProtonManager();
+    this.protonManager = ProtonProvider.get();
 }
 ```
 
-`ProtonManager` should not be `null` at this point. If it is, check your console for connection and configuration errors.
+{% hint style="info" %}
+`ProtonManager` should not be `null` at this point. If it is, Proton will through an error. You should check your configuration and dependencies if this occurs.
+{% endhint %}
 
 ### Sending your first message
 
@@ -219,7 +244,7 @@ protonManager.broadcast(namespace, subject, data);
 ```
 
 {% hint style="info" %}
-**`namespace`** and **`subject`**form what is called a **`MessageContext`**. Each `MessageContext` can only have one defined datatype. So if you define a namespace and subject, make sure you always send the same type of data through that context.
+**`namespace`** and **`subject`**form what is called a **`MessageContext`**.  Each `MessageContext` can only have one defined datatype. So if you define a namespace and subject, make sure you always send the same type of data through that context.
 {% endhint %}
 
 {% hint style="danger" %}
@@ -259,28 +284,32 @@ class MyClass {
 }
 ```
 
+{% hint style="info" %}
 The code within a `MessageHandler` is synchronous with Bukkit by default. This was a design decision to match the fact that most API calls must be synchronous. However, you can receive messages asynchronously if you wish by adding an optional attribute.
+{% endhint %}
 
 ```java
 @MessageHandler(namespace="namespace", subject="subject", async=true)
 ```
+
+{% hint style="danger" %}
+If using bungee, this flag will be ignored and all handlers will be called asynchronously
+{% endhint %}
 
 The final step to actual receive any messages, is to register your `MessageHandler(s)`. Similarly to the Event API, you just register your class instance with the `ProtonManager`.
 
 ```java
 @Override
 public void onEnable() {
-    this.protonManager = Proton.getProtonManager();
-    if(this.protonManager != null){
-        this.protonManager.registerMessageHandlers(this, new MyClass());   
-    }
+    this.protonManager = ProtonProvider.get();
+    this.protonManager.registerMessageHandlers(this, new MyClass());
 }
 ```
 
 If you want, you can register all of your handlers in one call.
 
 ```java
-this.protonManager.registerMessageHandlers(this, handler1, handler2, handler3...);
+this.protonManager.registerMessageHandlers(handler1, handler2, handler3...);
 ```
 
 If you have any lingering questions, feel free to consult [the examples repo](https://github.com/mcgrizzz/ProtonExamples). You can also submit `question` issue [here](https://github.com/mcgrizzz/Proton/issues).

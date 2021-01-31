@@ -23,7 +23,7 @@ description: >-
 <dependency>
     <groupId>com.github.mcgrizzz</groupId>
     <artifactId>Proton</artifactId>
-    <version>v1.1.0</version>
+    <version>v1.1.2</version>
     <scope>provided</scope>
 </dependency>
 ```
@@ -39,7 +39,7 @@ repositories {
 
 ```groovy
 dependencies {
-        implementation 'com.github.mcgrizzz:Proton:v1.1.1'
+        implementation 'com.github.mcgrizzz:Proton:v1.1.2'
 }
 ```
 
@@ -68,7 +68,13 @@ Here are some hosts for RabbitMQ that you may find helpful. One of them actually
 
 \*When choosing a host and plan consider your network's size and needs.
 
-### Setting-up the `config.yml` for Proton
+### Setting-up Redis
+
+{% hint style="danger" %}
+This section is under-construction. Please take a look at [Redis Quickstart](https://redis.io/topics/quickstart)
+{% endhint %}
+
+### Proton's `config.yml` 
 
 Before integrating with Proton, you should configure your servers' Proton configs.
 
@@ -154,7 +160,7 @@ identification:
 
 `bStatsEnabled` is a boolean value that enabled basic metric collection. You can disable this if you like.
 
-### Setting-up your plugin
+### Your plugin
 
 Just make sure that in your `plugin.yml`, you include the dependency for Proton.
 

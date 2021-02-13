@@ -208,7 +208,7 @@ public void onEnable() {
 ```
 
 {% hint style="info" %}
-`ProtonManager` should not be `null` at this point. If it is, Proton will through an error. You should check your configuration and dependencies if this occurs.
+`ProtonManager` should not be `null` at this point. If it is, Proton will throw an error. You should check your configuration and dependencies if this occurs.
 {% endhint %}
 
 ### Sending your first message
